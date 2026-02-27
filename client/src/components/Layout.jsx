@@ -5,6 +5,7 @@ const links = [
   { to: '/', label: 'Board' },
   { to: '/messages', label: 'Messages' },
   { to: '/crew', label: 'Crew' },
+  { to: '/categories', label: 'Categories' },
 ];
 
 export default function Layout({ children }) {

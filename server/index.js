@@ -9,6 +9,7 @@ import { authMiddleware, loginHandler } from './auth.js';
 import tasksRouter from './routes/tasks.js';
 import crewRouter from './routes/crew.js';
 import messagesRouter from './routes/messages.js';
+import categoriesRouter from './routes/categories.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -29,6 +30,7 @@ app.get('/api/health', (_req, res) => res.json({ status: 'ok', timestamp: new Da
 app.use('/api/tasks', tasksRouter);
 app.use('/api/crew', crewRouter);
 app.use('/api/messages', messagesRouter);
+app.use('/api/categories', categoriesRouter);
 
 // Serve static client in production
 const clientDist = path.join(__dirname, '..', 'client', 'dist');

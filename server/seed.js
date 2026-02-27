@@ -1,6 +1,15 @@
 import 'dotenv/config';
 import db from './db.js';
 
+const categories = [
+  { name: 'Electrical/Systems', color: '#3b82f6' },
+  { name: 'Mechanical/Engine',  color: '#f59e0b' },
+  { name: 'Carpentry/Interior', color: '#8b5cf6' },
+  { name: 'Paint/Finishes',     color: '#ec4899' },
+  { name: 'Fiberglass/Hull',    color: '#10b981' },
+  { name: 'Canvas/Enclosure',   color: '#f97316' },
+];
+
 const crew = [
   { name: 'Jack', role: 'Fiberglass/Paint', phone: '', email: '' },
   { name: 'Charlie', role: 'Carpentry/Paint', phone: '', email: '' },
@@ -58,6 +67,17 @@ const tasks = [
 ];
 
 // Idempotent: only seed if tables are empty
+const catCount = db.prepare('SELECT COUNT(*) as count FROM categories').get().count;
+if (catCount === 0) {
+  const insertCat = db.prepare('INSERT INTO categories (name, color) VALUES (?, ?)');
+  for (const c of categories) {
+    insertCat.run(c.name, c.color);
+  }
+  console.log(`Seeded ${categories.length} categories`);
+} else {
+  console.log(`Categories table already has ${catCount} rows, skipping`);
+}
+
 const crewCount = db.prepare('SELECT COUNT(*) as count FROM crew').get().count;
 if (crewCount === 0) {
   const insertCrew = db.prepare('INSERT INTO crew (name, role, phone, email) VALUES (?, ?, ?, ?)');

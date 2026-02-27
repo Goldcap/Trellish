@@ -6,16 +6,8 @@ import MessageHistory from './MessageHistory.jsx';
 const STATUSES = ['todo', 'in_progress', 'blocked', 'done'];
 const PRIORITIES = ['high', 'medium', 'low'];
 const CREW = ['Jack', 'Charlie', 'Perry'];
-const CATEGORIES = [
-  'Electrical/Systems',
-  'Mechanical/Engine',
-  'Carpentry/Interior',
-  'Paint/Finishes',
-  'Fiberglass/Hull',
-  'Canvas/Enclosure',
-];
 
-export default function TaskDetailModal({ task, onClose, onUpdate, onDelete }) {
+export default function TaskDetailModal({ task, onClose, onUpdate, onDelete, categoryNames = [] }) {
   const [notes, setNotes] = useState(task.notes || '');
   const [tab, setTab] = useState('details');
   const { messages, loading: msgsLoading, sendSms, sendEmail } = useMessages(task.id);
@@ -117,7 +109,7 @@ export default function TaskDetailModal({ task, onClose, onUpdate, onDelete }) {
                   onChange={(e) => handleFieldChange('category', e.target.value)}
                   className="w-full border rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-navy"
                 >
-                  {CATEGORIES.map((c) => (
+                  {categoryNames.map((c) => (
                     <option key={c} value={c}>{c}</option>
                   ))}
                 </select>

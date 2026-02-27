@@ -1,21 +1,13 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
-const CATEGORIES = [
-  'Electrical/Systems',
-  'Mechanical/Engine',
-  'Carpentry/Interior',
-  'Paint/Finishes',
-  'Fiberglass/Hull',
-  'Canvas/Enclosure',
-];
 const CREW = ['Jack', 'Charlie', 'Perry'];
 const PRIORITIES = ['high', 'medium', 'low'];
 
-export default function AddTaskModal({ onClose, onCreate }) {
+export default function AddTaskModal({ onClose, onCreate, categoryNames = [] }) {
   const [form, setForm] = useState({
     task: '',
-    category: CATEGORIES[0],
+    category: categoryNames[0] || '',
     assigned: CREW[0],
     priority: 'medium',
     notes: '',
@@ -63,7 +55,7 @@ export default function AddTaskModal({ onClose, onCreate }) {
           <div className="grid grid-cols-2 gap-3">
             <Field label="Category">
               <select value={form.category} onChange={set('category')} className="w-full border rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-navy">
-                {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                {categoryNames.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </Field>
             <Field label="Assignee">

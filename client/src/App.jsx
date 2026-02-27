@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import BoardPage from './pages/BoardPage.jsx';
 import MessageLogPage from './pages/MessageLogPage.jsx';
 import CrewSettingsPage from './pages/CrewSettingsPage.jsx';
+import CategoriesPage from './pages/CategoriesPage.jsx';
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -19,6 +20,7 @@ export default function App() {
       <Route path="/" element={<ProtectedRoute><BoardPage /></ProtectedRoute>} />
       <Route path="/messages" element={<ProtectedRoute><MessageLogPage /></ProtectedRoute>} />
       <Route path="/crew" element={<ProtectedRoute><CrewSettingsPage /></ProtectedRoute>} />
+      <Route path="/categories" element={<ProtectedRoute><CategoriesPage /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

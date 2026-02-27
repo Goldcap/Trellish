@@ -1,16 +1,7 @@
-const CATEGORIES = [
-  'Electrical/Systems',
-  'Mechanical/Engine',
-  'Carpentry/Interior',
-  'Paint/Finishes',
-  'Fiberglass/Hull',
-  'Canvas/Enclosure',
-];
-
 const CREW = ['Jack', 'Charlie', 'Perry'];
 const PRIORITIES = ['high', 'medium', 'low'];
 
-export default function FilterBar({ filters, setFilter, clearFilters, hasFilters, onAddTask }) {
+export default function FilterBar({ filters, setFilter, clearFilters, hasFilters, onAddTask, categoryNames = [] }) {
   return (
     <div className="flex flex-wrap items-center gap-3 px-4 py-3 bg-white border-b">
       <button
@@ -33,7 +24,7 @@ export default function FilterBar({ filters, setFilter, clearFilters, hasFilters
         label="Category"
         value={filters.category}
         onChange={(v) => setFilter('category', v)}
-        options={CATEGORIES}
+        options={categoryNames}
       />
       <Select
         label="Priority"

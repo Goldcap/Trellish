@@ -1,14 +1,5 @@
 import { Draggable } from '@hello-pangea/dnd';
 
-const CATEGORY_COLORS = {
-  'Electrical/Systems': 'bg-cat-electrical-light text-cat-electrical',
-  'Mechanical/Engine': 'bg-cat-mechanical-light text-cat-mechanical',
-  'Carpentry/Interior': 'bg-cat-carpentry-light text-cat-carpentry',
-  'Paint/Finishes': 'bg-cat-paint-light text-cat-paint',
-  'Fiberglass/Hull': 'bg-cat-fiberglass-light text-cat-fiberglass',
-  'Canvas/Enclosure': 'bg-cat-canvas-light text-cat-canvas',
-};
-
 const CREW_COLORS = {
   Jack: 'bg-crew-jack-light text-crew-jack',
   Charlie: 'bg-crew-charlie-light text-crew-charlie',
@@ -21,7 +12,7 @@ const PRIORITY_DOT = {
   low: 'bg-priority-low',
 };
 
-export default function TaskCard({ task, index, onClick, onDelete }) {
+export default function TaskCard({ task, index, onClick, onDelete, categoryColors = {} }) {
   return (
     <Draggable draggableId={String(task.id)} index={index}>
       {(provided, snapshot) => (
@@ -57,7 +48,13 @@ export default function TaskCard({ task, index, onClick, onDelete }) {
               </div>
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {task.category && (
-                  <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${CATEGORY_COLORS[task.category] || 'bg-gray-100 text-gray-600'}`}>
+                  <span
+                    className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
+                    style={categoryColors[task.category]
+                      ? { backgroundColor: categoryColors[task.category] + '20', color: categoryColors[task.category] }
+                      : { backgroundColor: '#f3f4f6', color: '#4b5563' }
+                    }
+                  >
                     {task.category}
                   </span>
                 )}
