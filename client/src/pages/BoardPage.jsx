@@ -4,16 +4,18 @@ import { useQueryParams } from '../hooks/useQueryParams.js';
 import FilterBar from '../components/FilterBar.jsx';
 import KanbanBoard from '../components/KanbanBoard.jsx';
 import TaskDetailModal from '../components/TaskDetailModal.jsx';
+import AddTaskModal from '../components/AddTaskModal.jsx';
 
 export default function BoardPage() {
   const { filters, setFilter, clearFilters, hasFilters } = useQueryParams();
-  const { tasks, loading, updateTask, deleteTask, refetch } = useTasks(filters);
+  const { tasks, loading, updateTask, createTask, deleteTask } = useTasks(filters);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   if (loading) {
     return (
       <div className="flex flex-col h-full">
-        <FilterBar filters={filters} setFilter={setFilter} clearFilters={clearFilters} hasFilters={hasFilters} />
+        <FilterBar filters={filters} setFilter={setFilter} clearFilters={clearFilters} hasFilters={hasFilters} onAddTask={() => setShowAddModal(true)} />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-gray-400 text-sm">Loading tasks...</div>
         </div>
@@ -23,8 +25,8 @@ export default function BoardPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-52px)] sm:h-[calc(100vh-52px)]">
-      <FilterBar filters={filters} setFilter={setFilter} clearFilters={clearFilters} hasFilters={hasFilters} />
-      <KanbanBoard tasks={tasks} onUpdateTask={updateTask} onCardClick={setSelectedTask} />
+      <FilterBar filters={filters} setFilter={setFilter} clearFilters={clearFilters} hasFilters={hasFilters} onAddTask={() => setShowAddModal(true)} />
+      <KanbanBoard tasks={tasks} onUpdateTask={updateTask} onCardClick={setSelectedTask} onDeleteTask={deleteTask} />
       {selectedTask && (
         <TaskDetailModal
           task={selectedTask}
@@ -38,6 +40,9 @@ export default function BoardPage() {
             setSelectedTask(null);
           }}
         />
+      )}
+      {showAddModal && (
+        <AddTaskModal onClose={() => setShowAddModal(false)} onCreate={createTask} />
       )}
     </div>
   );

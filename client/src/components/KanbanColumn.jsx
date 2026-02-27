@@ -15,7 +15,7 @@ const STATUS_LABELS = {
   done: 'Done',
 };
 
-export default function KanbanColumn({ status, tasks, onCardClick }) {
+export default function KanbanColumn({ status, tasks, onCardClick, onDeleteTask }) {
   return (
     <div className={`flex flex-col bg-gray-100 rounded-xl min-w-[280px] w-[280px] md:flex-1 md:min-w-0 border-t-4 ${STATUS_COLORS[status]}`}>
       <div className="flex items-center justify-between px-3 py-2.5">
@@ -36,7 +36,7 @@ export default function KanbanColumn({ status, tasks, onCardClick }) {
             }`}
           >
             {tasks.map((task, index) => (
-              <TaskCard key={task.id} task={task} index={index} onClick={onCardClick} />
+              <TaskCard key={task.id} task={task} index={index} onClick={onCardClick} onDelete={onDeleteTask} />
             ))}
             {provided.placeholder}
           </div>

@@ -3,7 +3,7 @@ import KanbanColumn from './KanbanColumn.jsx';
 
 const COLUMNS = ['todo', 'in_progress', 'blocked', 'done'];
 
-export default function KanbanBoard({ tasks, onUpdateTask, onCardClick }) {
+export default function KanbanBoard({ tasks, onUpdateTask, onCardClick, onDeleteTask }) {
   const grouped = {};
   for (const col of COLUMNS) grouped[col] = [];
   for (const task of tasks) {
@@ -31,6 +31,7 @@ export default function KanbanBoard({ tasks, onUpdateTask, onCardClick }) {
             status={status}
             tasks={grouped[status]}
             onCardClick={onCardClick}
+            onDeleteTask={onDeleteTask}
           />
         ))}
       </div>
