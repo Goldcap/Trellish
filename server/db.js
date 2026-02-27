@@ -37,6 +37,8 @@ db.exec(`
     date_started TEXT,
     date_completed TEXT,
     notes TEXT DEFAULT '',
+    start_date TEXT,
+    etd_days INTEGER,
     deleted INTEGER NOT NULL DEFAULT 0,
     created_at TEXT NOT NULL DEFAULT (datetime('now')),
     updated_at TEXT NOT NULL DEFAULT (datetime('now'))
@@ -60,5 +62,14 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_message_log_task_id ON message_log(task_id);
   CREATE INDEX IF NOT EXISTS idx_message_log_recipient ON message_log(recipient);
 `);
+
+// Migrations for existing databases
+const cols = db.prepare("PRAGMA table_info(tasks)").all().map(c => c.name);
+if (!cols.includes('start_date')) {
+  db.exec("ALTER TABLE tasks ADD COLUMN start_date TEXT");
+}
+if (!cols.includes('etd_days')) {
+  db.exec("ALTER TABLE tasks ADD COLUMN etd_days INTEGER");
+}
 
 export default db;

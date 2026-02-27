@@ -33,19 +33,21 @@ router.get('/:id', (req, res) => {
 
 // POST /api/tasks — create
 router.post('/', (req, res) => {
-  const { task, category, assigned, status, priority, notes } = req.body;
+  const { task, category, assigned, status, priority, notes, start_date, etd_days } = req.body;
   if (!task) return res.status(400).json({ error: 'Task name is required' });
 
   const result = db.prepare(`
-    INSERT INTO tasks (task, category, assigned, status, priority, notes)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO tasks (task, category, assigned, status, priority, notes, start_date, etd_days)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
     task,
     category || '',
     assigned || '',
     status || 'todo',
     priority || 'medium',
-    notes || ''
+    notes || '',
+    start_date || null,
+    etd_days != null ? etd_days : null
   );
 
   const created = db.prepare('SELECT * FROM tasks WHERE id = ?').get(result.lastInsertRowid);
@@ -57,7 +59,7 @@ router.patch('/:id', (req, res) => {
   const existing = db.prepare('SELECT * FROM tasks WHERE id = ? AND deleted = 0').get(req.params.id);
   if (!existing) return res.status(404).json({ error: 'Task not found' });
 
-  const allowed = ['task', 'category', 'assigned', 'status', 'priority', 'notes', 'date_started', 'date_completed'];
+  const allowed = ['task', 'category', 'assigned', 'status', 'priority', 'notes', 'date_started', 'date_completed', 'start_date', 'etd_days'];
   const updates = [];
   const params = [];
 

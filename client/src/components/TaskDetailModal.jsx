@@ -115,6 +115,27 @@ export default function TaskDetailModal({ task, onClose, onUpdate, onDelete, cat
                 </select>
               </Field>
 
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Start Date">
+                  <input
+                    type="date"
+                    value={task.start_date || ''}
+                    onChange={(e) => handleFieldChange('start_date', e.target.value || null)}
+                    className="w-full border rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-navy"
+                  />
+                </Field>
+                <Field label="ETD (days)">
+                  <input
+                    type="number"
+                    min="1"
+                    value={task.etd_days || ''}
+                    onChange={(e) => handleFieldChange('etd_days', e.target.value ? parseInt(e.target.value) : null)}
+                    className="w-full border rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-navy"
+                    placeholder="e.g. 5"
+                  />
+                </Field>
+              </div>
+
               <Field label="Notes">
                 <textarea
                   value={notes}
