@@ -20,7 +20,7 @@ export default function Layout({ children }) {
     <div className="min-h-screen flex flex-col">
       <nav className="bg-navy text-white px-4 py-3 flex items-center justify-between shadow-md">
         <div className="flex items-center gap-6">
-          <span className="text-xl font-bold tracking-tight">Das Boot</span>
+          <span className="text-xl font-bold tracking-tight">Das Boot PMS</span>
           <div className="hidden sm:flex gap-1">
             {links.map((l) => (
               <NavLink
