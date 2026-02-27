@@ -35,7 +35,10 @@ export function authMiddleware(req, res, next) {
   // Skip auth if no password configured
   if (!process.env.APP_PASSWORD) return next();
 
-  // Public routes
+  // Only protect /api/* routes (let static files through)
+  if (!req.path.startsWith('/api/')) return next();
+
+  // Public API routes
   if (req.path === '/api/auth/login' || req.path === '/api/health') return next();
 
   const authHeader = req.headers.authorization;
